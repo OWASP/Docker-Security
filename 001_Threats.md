@@ -1,32 +1,12 @@
 
 # Threat Modeling
 
-There are often misunderstandings of what the benefit of using Docker is or the additional threats are supposed to me when using Docker.
+The classical approach how to secure an environment is looking at it from the attacker perspective and enumerate vectors for an attack. This is what this chapter is about.
 
-The perspective from a developer is different from networking engineer and the system engineer might also put up another round of arguments.
-
-Fact is, in a containerized environment a lot has change not only how deployments are done but also how hardware and network resources are used.
+Those vectors will help you to define what needs to be protected. With this definition one can put security controls in place to provide a baseline protection and beyond. This is what the ten controls in the following chapters are about.
 
 
-## Shift in Paradigm: new vectors
-
-Any containment technology doesn't solve application security problems. It doesn't help doing input validation and it doesn't provide protecting against SQL injection. For application security risks OWASP provides a lot of other useful documents starting from the OWASP Top 10 over the [https://www.owasp.org/index.php/OWASP_Proactive_Controls OWASP Proactive Controls] to the [https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project OWASP Application Security Verification standard] -- just to name a few.
-
-Container Security is mostly about system and network security and a secure design of the architectures involved.
-
-Looking at a container environment from the perspective of the classic world especially in system and network areas are big changes. Those changes are opening up new potential attack surfaces.
-
-Apart from the technology one needs to be careful in respect to two other soft points:
-
-* Docker with its 5 years is a relatively new technology -- subtracting the time for maturing and adoption the time span is even shorter. Every new technology needs time until the knowledge of the technology and their best practices becomes common knowledge. This document contributes to this.
-* While container solutions might offer benefits for the developer, the technology is not simple. Not being simple is what makes security more difficult, a.k.a. _complexity kills security_ or: the _KISS principle_ -- keep it simple and stupid.
-
-
-## Vectors / Threats
-
-As said above Docker doesn't address application security problems. But it also doesn't cause new application security problems. But special care has to be taken so that no _new network and system_ security problems arise.
-
-### Threat 1: Container escape (System)
+### Threat 1: Container Escape (System)
 
 In this scenario the application is insecure in a way that some kind of shell access is possible. So the attacker managed e.g. from the internet to successfully stage an attack in which he has managed to escape the application and ended up to be in the container. The container is as the name indicates supposed to contain him.
 
@@ -79,7 +59,6 @@ Every hop is a potential attack surface for the attacker. If an attacker manages
 to get foot into one step and there's no integrity check whether what will be
 deployed is what should be deployed there is the threat that on behalf of the
 attacker images with his malicious payloads are being deployed.
-
 
 
 
