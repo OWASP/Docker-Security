@@ -1,6 +1,6 @@
 # Docker Security
 
-This is a draft version of the OWASP Docker Top 10.
+This is a WIP (work in progress) version of the OWASP Docker Top 10.
 
 ## About this document
 
