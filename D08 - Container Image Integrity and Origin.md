@@ -1,4 +1,4 @@
-# D05 - Maintain Security Contexts
+# D08 - Container Image Integrity and Origin
 
 
 ## Threat Scenarios

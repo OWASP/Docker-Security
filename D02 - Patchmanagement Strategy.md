@@ -1,4 +1,4 @@
-# D05 - Maintain Security Contexts
+# D02 - Patchmanagement Strategy
 
 
 ## Threat Scenarios
@@ -8,5 +8,4 @@
 ## How can I find out?
 
 ## References
-
 

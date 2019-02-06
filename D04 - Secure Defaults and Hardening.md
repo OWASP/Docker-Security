@@ -1,4 +1,4 @@
-# D05 - Maintain Security Contexts
+# D04 - Secure Defaults and Hardening
 
 
 ## Threat Scenarios
