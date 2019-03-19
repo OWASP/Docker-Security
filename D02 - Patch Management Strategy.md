@@ -1,7 +1,7 @@
 # D02 - Patch Management Strategy
 
 
-Please note that by patch management strategy (patch management plan or policy, or security SLA are used synonymous) in the following paragraphs the scope is not primarily a technical one: It's necessary to agree and have an approval _when_ certain patches will be applied.  Normally this is a task of an Information Security Officer. However not having one should not be an excuse not to have a patch management strategy.
+Please note that by patch management strategy (patch management plan or policy, or security SLA are used synonymous) in the following paragraphs the scope is not primarily a technical one: It's necessary to agree and have an approval _when_ certain patches will be applied.  Often this strategy would be a task of an Information Security Officer. However not having an ISO should not be an excuse not to have a patch management strategy.
 
 
 ## Threat Scenarios
