@@ -6,6 +6,19 @@ Please note that by patch management strategy (patch management plan or policy, 
 
 ## Threat Scenarios
 
+The worst thing which can happen to your container environment is that either the host(s) are compromised or the orchestration tool. The first would enable the attacker to control all the containers running on the host, the second will enable the attacker to control all containers on _all_ hosts which the software is managing. 
+
+The most important threats are kernel exploits from within a container through abuse of Linux sys(tem )calls which lead to root access. Also the orchestration software has interfaces which either maybe not be locked down [1] and have shown numerous problems in the past. e.g. like etcd [], kubelet [] and dashboard [].
+
+While threats from the Linux kernel can be partly mitigated by constraining syscalls further (see D4) and network access restrictions (D3) can be applied to reduce the network vector for the orchestration it is important to keep in mind that risk is equal likelihood times damage. Which means also if you minimized the likelihood through partly mitigation or network access, the damage and thus the risk is very high. Patches make sure that the software is always as secure as provided from the vendor.
+
+Another threat arises from any Linux services on the host. Also if the host configuration is reasonable secured (see D3 and D4) e.g. a vulnerable `sshd` poses a threat to your host too. If the services is not secured via network and configuration, the risk is higher.
+
+
+## How Do I prevent?
+
+### Different Patch Domains
+
 In general not patching in a timely fashion is the most frequent problem in the IT industry. Most software defects from "off the shelf software" are well known before exploits are written and used. Sometimes not even a sophisticated exploit is needed.
 
 Same applies for your container environment. It is not as straight foward though as there are four different "patch domains":
@@ -17,8 +30,7 @@ Same applies for your container environment. It is not as straight foward though
 
 While the first domain of patching seems easy at the first glance updating the Container software is not seldom postponed. Same applies for the orchestration tool and the host as they are core components.
 
-
-## How Do I prevent?
+### Suggestion when to patch what
 
 Depending on the patch domains mentioned above there are different approaches how patching can be achieved. Important is to have a patch strategy for each component. Your patch strategy should handle _regular_ and _emergency_ patches.
 
@@ -43,10 +55,13 @@ Without doing deep researches you can gather good indicators on the host like
 * Have a look at the runtime of processes (`top` --> column `TIME+`) including e.g. `dockerd`, `docker-containerd*` and `kube*` processes
 * Deleted files: `lsof +L1`
 
-If your role is internal within the organization and you need to be sure that both patch management strategies exist and are being properly executed. Depending where you start with your policy recommended is [1]. [2].
+If your role is internal within the organization and you need to be sure that both patch management strategies exist and are being properly executed. Depending where you start with your policy recommended is [n-1]. [n].
 
 
 ## References
 
-* [1] TBD: ~~Good source (1) for patch management, lightweighted (not ITIL, nor ISO 2700x)~~
-* [2] TBD: ~~Another good source (2) for patch management~~
+### Commercial
+
+* [1] [Lacework: Containers at Risk](https://www.lacework.com/containers-at-risk-a-review-of-21000-cloud-environments/)
+* [n-1] TBD: ~~Good source (1) for patch management, lightweighted (not ITIL, nor ISO 2700x)~~
+* [n] TBD: ~~Another good source (2) for patch management~~
