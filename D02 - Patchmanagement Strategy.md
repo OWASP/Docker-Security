@@ -1,4 +1,4 @@
-# D02 - Patchmanagement Strategy
+# D02 - Patch Management Strategy
 
 
 ## Threat Scenarios
