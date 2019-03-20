@@ -1,6 +1,6 @@
 # Docker Security
 
-This is are the OWASP Docker Top 10. It's a work in progress.
+This is the OWASP Docker Top 10. It's a work in progress.
 
 ## About this document
 
