@@ -10,7 +10,7 @@ It should be noted that it is very dangerous for the host and all containers on 
 
 ## How Do I prevent?
 
-It is important to run your microservice with the least privilege possible. The good thing is that containers are unprivileged, unless you have configured them explicitly differently (e.g. `docker run --privileged`). However running your microservice under a different user as root requires configuration. You need to configure your mini OS of your container to both contain a user (and maybe a group) and your service needs to make use of this user and group.
+It is important to run your microservice with the least privilege possible. The good thing is that containers are unprivileged, unless you have configured them explicitly differently (e.g. `docker run --privileged`). However running your microservice under a different user as root requires configuration. You need to configure your mini distribution of your container to both contain a user (and maybe a group) and your service needs to make use of this user and group.
 
 Basically there are two choices.
 
@@ -18,7 +18,7 @@ In a simple container scenario if you build your container you have to add `RUN 
 
 The second choice would be using Linux *user namespaces*. Namespaces are a general means to provide to a container a different (faked) view of Linux kernel resources. There are different resources available like User, Network, PID, IPC, see `namespaces(7)`. In the case of *user namespaces* a container could be provided with a his view of a standard root user whereas the host kernel maps this to a different user ID. More, see [5], `cgroup_namespaces(7)` and `user_namespaces(7)`.
 
-The catch using namespaces is that you can only run one namespace at a time. If you run user namespacing you e.g. can't use network namespacing on the same host [6]. Also, all your containers on a host will be defaulted to it, unless you explicitly configure this differently per container. 
+The catch using namespaces is that you can only run one namespace at a time. If you run user namespacing you e.g. can't use network namespacing on the same host [6]. Also, all your containers on a host will be defaulted to it, unless you explicitly configure this differently per container.
 
 
 
