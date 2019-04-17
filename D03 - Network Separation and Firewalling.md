@@ -1,28 +1,25 @@
 # D03 - Network Separation and Firewalling
 
-In the old world one had a secured DMZ managed by an infrastructure or network team which made sure that
-the frontend server's service was in a locked down fashion reachable from the internet and e.g. can talk securely to the middleware and backend -- and to nothing else. Management interfaces from a serial console or a baseband management controller were put to a dedicated LAN with strict access controls.
+In the old world one had a secured DMZ managed by an infrastructure or network team which made sure that the frontend server's service was in a locked down fashion reachable from the internet and e.g. can talk securely to the middleware and backend -- and to nothing else. Management interfaces from a serial console or a baseband management controller were put to a dedicated LAN with strict access controls.
 
-Once a an attacker 
+This should be bascially your starting point when planning a network for your microservices.
 
 ## Threat Scenarios
 
-In the container world basically everything changed. First of all the network is not necessarily divided
-into zones with strict firewall/routing rules. Without precautions it maybe even flat and every microservice is basically able to talk to all microservices, including interfaces of the management backplane - your orchestration tool or e.g. the host's services.
+The container world changed the networking. The network is not necessarily divided into zones with strict firewall/routing rules. Without precautions it maybe even flat and every microservice is basically able to talk to all microservices, including interfaces of the management backplane - your orchestration tool or e.g. the host's services.
 
 The paradigm having one microservice per containers makes matters not easier, as some microservices need to talk to each other while others should definitely not from the security standpoint.
 
 Threats:
 
-* Internet: exposed management frontends/APIs from orchestration tool <sup>1)</sup>
-* LAN/DMZ: exposed management frontends/APIs from orchestration tool <sup>1)</sup>
-* LAN/DMZ: unnecessarily exposed microservices in the LAN from same application ( token,)
-* LAN/DMZ: unnecessarily exposed classical services (NFS/Samba, CI/CD appliance, DBs)
+* Internet exposed management frontends/APIs from orchestration tool <sup>1)</sup>
+* LAN/DMZ exposed management frontends/APIs from orchestration tool <sup>1)</sup>
+* LAN/DMZ unnecessarily exposed microservices in the LAN from same application ( token,)
+* LAN/DMZ unnecessarily exposed classical services (NFS/Samba, CI/CD appliance, DBs)
 * No 100% network separation between tenants as they share the same network
 * Access to host network from a microservice
 
-
-The threat scenario here is that an attacker got access to the local network, e.g. though a compromised frontend service (internet) and moves from there around in that network.
+Except the first scenario: The threats are that an attacker got access to the local network (LAN/DMZ), e.g. though your compromised frontend service (internet) and moves from there around in this network.
 
 
 ## How Do I prevent?
