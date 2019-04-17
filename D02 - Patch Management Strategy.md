@@ -1,8 +1,6 @@
 # D02 - Patch Management Strategy
 
-
-Please note that by patch management strategy (patch management plan or policy, or security SLA are used synonymous) in the following paragraphs the scope is not primarily a technical one: It's necessary to agree and have an approval _when_ certain patches will be applied.  Often this strategy would be a task of an Information Security Officer. However not having an ISO should not be an excuse not to have a patch management strategy.
-
+Please note that by patch management strategy (patch management plan or policy, or security SLA are used synonymous) in the following paragraphs the scope is not primarily a technical one: It's necessary to agree and have an approval _when_ certain patches will be applied.  Often this strategy would be a task of an Information Security Officer. But not having an ISO is no excuse for not having a patch management strategy.
 
 ## Threat Scenarios
 
@@ -14,6 +12,7 @@ While threats from the Linux kernel can be partly mitigated by constraining sysc
 
 Another threat arises from any Linux services on the host. Also if the host configuration is reasonable secured (see D3 and D4) e.g. a vulnerable `sshd` poses a threat to your host too. If the services is not secured via network and configuration, the risk is higher.
 
+You should also keep an eye on the support life time of each "ops" component used. If e.g. the host OS or orchestration software has run out of support, you likely won't be able to address security issues.
 
 ## How Do I prevent?
 
@@ -29,6 +28,8 @@ Same applies for your container environment. It is not as straight foward though
 * Host: operating system
 
 While the first domain of patching seems easy at the first glance updating the Container software is not seldom postponed. Same applies for the orchestration tool and the host as they are core components.
+
+Have a migration plan for EOL support for each domain mentioned.
 
 ### Suggestion when to patch what
 
