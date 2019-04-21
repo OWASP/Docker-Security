@@ -36,7 +36,11 @@ Also: If your host OS hiccups because of AppArmor or SELinux rules, do not switc
 ## How can I find out?
 
 * System: Log into it with administrative privileges and see what's running using `netstat -tulp` or `lsof -i -Pn| grep -v ESTABLISHED`. This won't return the network sockets from the containers though.
-* Container: Please note that `docker inspect` returns deliberately exposed ports only. #FIXME# `nmap -sTU -p1-65535 $(docker inspect $(docker ps -q) --format '{{.NetworkSettings.IPAddress}}')`
+* Container: Please note that `docker inspect` returns deliberately exposed ports only. 
+  **FIXME**
+  ```
+  nmap -sTU -p1-65535 $(docker inspect $(docker ps -q) --format '\{\{ .NetworkSettings .IPAddress }}')
+  ```
 * As in D03 scanning the network would be another one option, albeit probably not as effective.
 
 
