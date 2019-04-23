@@ -10,19 +10,19 @@ It can also be used to audit or secure an existing installation but especially h
 
 ### Name
 
-Albeit the document's name resembles the OWASP Top 10 it's quite different. First, it is not about risks which are based on data collected as the OWASP Top 10. Secondly the 10 bullet points here resemble either architectural bullet points or proactive controls.
+Albeit the document's name resembles the OWASP Top 10 it's quite different. First, it is not about risks which are based on data collected as the OWASP Top 10. Secondly the 10 bullet points here resemble (proactive) controls.
 
 ### For whom is this?
 
 This guide is for developers, auditors, architects, system and networking engineers. As indicated above you can also use this guide for external contractors to add formal technical requirements to your contract. The information security officer should have some interest too to meet baseline security requirements and beyond.
 
-These 10 bullet points are mostly (see below this paragraph) about system and network security and also system and network architecture. As a developer you don't have to be an expert in those -- that's what this guide is for. But as indicated above best is to start thinking about those points early. Please do not just start building it. 
+These 10 bullet points are mostly (see below this paragraph) about system and network security and system and network architecture. As a developer you don't have to be an expert in those -- that's what this guide is for. But as indicated above best is to start thinking about and addressing those points early. Please do not just start building it.
 
-One of the bullet point should not be misunderstood: Patch management is not a techincal point. It's a management process. Lat but not least for technical or information security management who has not been much worried about containerization this document also provides insights about the risks involve.
+One of the bullet point should not be misunderstood: Patch management is not a techincal point. It's a management process. Last but not least for technical or information security management who has not been much worried about containerization this document also provides insights about the risks involve.
 
 ### Structure of this document
 
-Security in Docker environments seemed often to be misunderstood. It was/is a highly disputed matter what the threats are supposed to be. So before diving into the Docker Top 10 bullet points, the threads need to be modeled which is happening upfront in the document. It not only helps understanding the security impacts but also gives you the ability to prioritize your task.
+Security in Docker environments seemed often to be misunderstood. It was`/`is a highly disputed matter what the threats are supposed to be. So before diving into the Docker Top 10 bullet points, the threads need to be modeled which is happening upfront in this document. It not only helps to understand any security impacts but also gives you the ability to prioritize your tasks.
 
 
 ## FAQ
