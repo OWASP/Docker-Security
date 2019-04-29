@@ -10,7 +10,7 @@ This document helps you in securing your containerized environment and keeping i
 
 There are often misunderstandings of what the security impacts - negative or positive - are supposed to be when using Docker.
 
-Docker, same as any other containerization technology, doesn't solve application security problems. It doesn't help with input validation and it doesn't protect against SQL injection. For application security risks, OWASP provides a lot of other useful documents, starting from the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) through the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) to the [OWASP Application Security Verification standard](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project) -- just to name a few.
+Docker, same as any other containerization technology, doesn't solve application security problems. It doesn't help with input validation and it doesn't protect against SQL injection. For application security risks, OWASP provides a lot of other useful documents, starting from the [OWASP Top 10](https://www.owasp.org/index.php/Category:OWASP_Top_Ten_Project) through the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) to the [OWASP Application Security Verification standard](https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project) - just to name a few.
 
 Container Security is mostly about topics regarding system and network security and a secure architectural design.
 
