@@ -1,34 +1,34 @@
 
 # Introduction
 
-Implementing a containerized environment is changing a lot not only how deployments are done but it also has a huge impact on a system and networking level and how hardware and network resources are being used.
+Implementing a containerized environment changes a lot not. It doesn't only affect deployments and the way they are done, but also has a huge impact on both system and networking levels, as well as hardware and network resource usage.
 
-This document is helping you to secure your containerized environment and keep it secure.
+This document helps you in securing your containerized environment and keeping it in that state.
 
 
 ## Application Security?
 
 There are often misunderstandings of what the security impacts - negative or positive - are supposed to be when using Docker.
 
-Docker as any other containerization technology doesn't solve application security problems. It doesn't help doing input validation and it doesn't provide protecting against SQL injection. For application security risks OWASP provides a lot of other useful documents, starting from the OWASP Top 10 over the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) to the [OWASP Application Security Verification standard]([https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project) -- just to name a few.
+Docker, same as any other containerization technology, doesn't solve application security problems. It doesn't help with input validation and it doesn't protect against SQL injection. For application security risks, OWASP provides a lot of other useful documents, starting from the OWASP Top 10 through the [OWASP Proactive Controls](https://www.owasp.org/index.php/OWASP_Proactive_Controls) to the [OWASP Application Security Verification standard]([https://www.owasp.org/index.php/Category:OWASP_Application_Security_Verification_Standard_Project) -- just to name a few.
 
-Container Security is mostly about system and network security and a secure architectural design.
+Container Security is mostly about topics regarding system and network security and a secure architectural design.
 
-This indicates that it is best _before_ you start using containerization, you should plan your environment in a secure manner. Some points are just difficult or costly to change later when you started already rolling out your containerization in production.
+This indicates that the optimal point to start considering it for your environment is _before_ you start using containerization. Some points are just too difficult or costly to change once you already started rolling out your containers in production.
 
-## Shift in Paradigm: new vectors
+## Shift in Paradigm: New Vectors
 
-Looking at it from the perspective of the classical world, especially in system and network areas containerization  means big changes to your environment. Those changes are opening up new potential attack surfaces. Special care has to be taken so that no network and system security problems arise.
+When looking at it from the perspective of more conventional and common environments, containerization leads to big changes - especially regarding system and network topics. Those changes are opening up new potential attack surfaces, and special care has to be taken in order to prevent network and system security problems from arising.
 
-Apart from these technical areas there are two non-technical points:
+In addition to these technical areas, there are two non-technical points:
 
-* Docker with its 5 years is a relatively new technology. Subtracting the time for maturing and adoption the time span is even shorter. Every new technology needs time until the knowledge of the technology and their best practices becomes common knowledge.
-* While container solutions might offer benefits for the developer, the technology is not simple from the security perspective. Not being simple is what makes security more difficult, a.k.a. the _KISS principle_ -- keep it simple and stupid.
+* Docker with its 5 years is a relatively new technology. Subtracting the time needed for maturing and adoption, the time span is even shorter. Every new technology needs time until the understanding of it and the associated best practices become common knowledge.
+* While container solutions might offer benefits for the developer, their security is not simple. Not being simple is what makes security more difficult, as it violates the _KISS principle_ by not keeping it simple and stupid.
 
-This is what this document is trying to help you with: It provides you with the knowledge to avoid common pitfalls in the system and network area and it tries to get a handle on the complexity.
+Thats what this document is trying to help you with: It provides you with the knowledge to avoid common pitfalls in the system and network areas and it tries to get a handle on the complexity.
 
 ## Document Structure
 
-In order to achieve this, this document first does an analysis of the threats caused by the technology. This is the basis for the ten points to follow.
+In order to achieve this, this document provides an analysis of the threats caused by the technology, which is then used as the basis for the ten points to follow.
 
 
