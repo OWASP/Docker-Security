@@ -24,8 +24,7 @@ The second choice would be using Linux *user namespaces*. Namespaces are a gener
 
 The catch using namespaces is that you can only run one namespace at a time. If you run user namespacing you e.g. can't use network namespacing on the same host [6]. Also, all your containers on a host will be defaulted to it, unless you explicitly configure this differently per container.
 
-
-
+<pagebreak/>
 ## How can I find out?
 
 #### Configuration

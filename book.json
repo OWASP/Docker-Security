@@ -8,7 +8,9 @@
   "language": "en_US",
   "gitbook": "3.2.3",
   "pdf": {
-    "fontFamily": "sans-serif"
+    "fontFamily": "sans-serif",
+    "chapterMark": "pagebreak",
+    "pageBreaksBefore": "//*[name()='pagebreak']"
   }
 }
 
