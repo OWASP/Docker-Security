@@ -1,8 +1,8 @@
 # D03 - Network Separation and Firewalling
 
-In the old world one had a secured DMZ managed by an infrastructure or network team which made sure that the frontend server's service was in a locked down fashion reachable from the internet and e.g. can talk securely to the middleware and backend -- and to nothing else. Management interfaces from a serial console or a baseband management controller were put to a dedicated LAN with strict access controls.
+In the old world one had a secured DMZ managed by an infrastructure or network team which made sure that the frontend server's service was in a locked down fashion reachable from the internet and e.g. can talk securely to the middleware and backend -- and to nothing else. Management interfaces from a serial console or a baseband management controller were put to a dedicated LAN with strict access controls. 
 
-This should be bascially your starting point when planning a network for your microservices.
+This is basically what network engineers call network segmentation. That should be bascially your idea when planning a network for your microservices.
 
 ## Threat Scenarios
 
@@ -41,7 +41,7 @@ Do proper network planning:
 
 If the network is segmented and not flat it is quite a task. Network information is best to request beforehand.
 
-Just reading the output from host-based firewalls like `iptables -t nat -L -nv` and  `iptables -L -nv` becomes a tedious task. _The_ tool for network scanning and discovery is nmap [1]. If the network is not flat you probably want to scan from different source IPs. That could be hosts and/or a specially crafted docker container containing nmap. Depending on the capabilities preconfigured and whether TCP connect scans suffice you maybe need to allow nmap in a container to send raw packets (`cap_net_raw`).
+Just reading the output from host-based firewalls like `iptables -t nat -L -nv` and  `iptables -L -nv` becomes a tedious task. _The_ tool for network scanning and discovery is nmap [1]. If the network is not flat you probably want to scan from different source IPs. That could be hosts and/or a specially crafted docker container containing nmap. Depending on the capabilities preconfigured and whether TCP connect scans suffice you maybe need to allow nmap in a container to send raw packets (`cap_net_raw`). Find out especially whether your host(s) or your orchestration tool have the neccessary protection from the deployed microservices on a network layer.
 
 
 ## References
