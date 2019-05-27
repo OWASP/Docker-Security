@@ -1,6 +1,6 @@
 # D04 - Secure Defaults and Hardening
 
-While D03 - Network Separation and Firewalling for sure provides at least can an extra layer of protection for any network based services on the e.g. host, the orchestration tool and other places: it doesn't address the root cause. It mitigates the symptom. Best practice though is not to start any service which is not needed. And those services which are needed need to be locked down properly.
+While D03 - Network Separation and Firewalling for sure provides at least can an extra layer of protection for any network based services on the e.g. host, the orchestration tool and other places: it doesn't address the root cause. It mitigates the symptom. Best practice though is not to start any service not needed in the first place. And those  which are needed need to be locked down properly.
 
 ## Threat Scenarios
 
