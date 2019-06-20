@@ -5,6 +5,9 @@ The classical approach how to secure an environment is looking at it from the at
 
 Those vectors will help you to define what needs to be protected. With this definition one can put security controls in place to provide a baseline protection and beyond. This is what the ten controls in the following chapters are about.
 
+The following image gives an overview of threats in docker.
+![threat-overview](assets/threats.png)
+
 
 ### Threat 1: Container Escape (System)
 
