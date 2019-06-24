@@ -6,3 +6,4 @@ services:
     entrypoint: gitbook pdf ./ ./dist/owasp-docker-security.pdf --gitbook=latest
     volumes:
       - .:/build
+
