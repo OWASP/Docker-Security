@@ -5,14 +5,14 @@
 
 The threat is here that a microservice is being offered to run under `root` in the container. If the service contains a weakness the attacker has full privileges within the container. While there's still some default protection left (Linux capabilities, either AppArmor or SELinux profiles) it removes one layer of protection. This extra layer broadens the attack surface. It also violates the least privilege principle [1] and from the OWASP perspective an insecure default.
 
-For privileged containers (`--privileged`) a breakout from the microservice into the container is almost comparable to run without any container. Privileged containers endanger your whole ost and all other containers.
+For privileged containers (`--privileged`) a breakout from the microservice into the container is almost comparable to run without any container. Privileged containers endanger your whole host and all other containers.
 
 
 ## How Do I prevent?
 
 It is important to run your microservice with the least privilege possible.
 
-Never use the `--privileged` flag. It gives all so-called capabilities (see D04) to the container and it can access host devices (`/dev`) including disks, and also has access to the `/sys` and `/proc` filesystem. And with a little work the container can even load kernel modules on the host [2]. The good thing is that containers are per default unprivileged. You would have to configure them explicitly to run privileged.
+First of all: Never use the `--privileged` flag. It gives all so-called capabilities (see D04) to the container and it can access host devices (`/dev`) including disks, and also has access to the `/sys` and `/proc` filesystem. And with a little work the container can even load kernel modules on the host [2]. The good thing is that containers are per default unprivileged. You would have to configure them explicitly to run privileged.
 
 However still running your microservice under a different user as root requires configuration. You need to configure your mini distribution of your container to both contain a user (and maybe a group) and your service needs to make use of this user and group.
 
@@ -24,7 +24,8 @@ The second choice would be using Linux *user namespaces*. Namespaces are a gener
 
 The catch using namespaces is that you can only run one namespace at a time. If you run user namespacing you e.g. can't use network namespacing on the same host [6]. Also, all your containers on a host will be defaulted to it, unless you explicitly configure this differently per container.
 
-<pagebreak/>
+In any case use user IDs which haven't been taken yet. If you e.g. run a service in a container which maps outside the container to a `systemd` user, this is not necessarily better.
+
 ## How can I find out?
 
 #### Configuration
@@ -43,8 +44,7 @@ Have a look in the process list of the host, or use `docker top` or `docker insp
 
 #### User namespaces
 
-The files `/etc/subuid` and `/etc/subgid` do the uid mapping for all containers. If they don't exist and `/var/lib/docker/` doesn't contain
-any other entries owned by `root:root` you're not using any uid remapping. On the other hand if those files exist and there are files in that directory you still need to check whether your docker daemon was started with `--userns-remap` or the config file `/etc/docker/daemon.json` was used.
+The files `/etc/subuid` and `/etc/subgid` do the UID mapping for all containers. If they don't exist and `/var/lib/docker/` doesn't contain any other entries owned by `root:root` you're not using any UID remapping. On the other hand if those files exist and there are files in that directory you still need to check whether your docker daemon was started with `--userns-remap` or the config file `/etc/docker/daemon.json` was used.
 
 
 
