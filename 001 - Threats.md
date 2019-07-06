@@ -7,6 +7,7 @@ Those vectors will help you to define what needs to be protected. With this defi
 
 The following image gives an overview of threats in docker.
 ![threat-overview](assets/threats.png)
+Source: [Docker Security Workshop, Timo Pagel]([)https://docs.google.com/presentation/d/1SWCyscCQ0YGW3_Y6vCwI4ZY_Q5-TOQ-eoVZaT6qwofc/edit?usp=sharing)
 
 
 ### Threat 1: Container Escape (System)
