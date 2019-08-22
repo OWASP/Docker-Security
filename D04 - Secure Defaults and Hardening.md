@@ -1,6 +1,6 @@
 # D04 - Secure Defaults and Hardening
 
-While D03 - Network Separation and Firewalling aims for providing an an extra layer of protection for any network based services on the host and the containers and the orchestration tool: it doesn't address the root cause. It mitigates often the symptom. If there's a network service started which is not needed at all you should rather not start it in the first place. If there's a service started which is needed you should lock it down properly.
+While *D03 - Network Segmentation and Firewalling* aims for providing a layer of protection for any network based services on the host and the containers and the orchestration tool: it doesn't address the root cause. It mitigates often just the symptom. If there's a network service started which is not needed at all you should rather not start it in the first place. If there's a service started which is needed you should lock it down properly.
 
 ## Threat Scenarios
 

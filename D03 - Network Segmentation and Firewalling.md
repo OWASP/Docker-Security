@@ -1,4 +1,4 @@
-# D03 - Network Separation and Firewalling
+# D03 - Network Segmentation and Firewalling
 
 In the old world one had a secured DMZ (demilitarized zone) managed by an infrastructure or network team which made sure that only the frontend server's service was reachable from the internet. And on the other side this server was able to talk securely to the middleware and backend -- and to nothing else. Management interfaces from a serial console or a baseband management controller were put to a dedicated LAN with strict access controls.
 
@@ -6,7 +6,7 @@ This is basically what network engineers call network segmentation and firewalli
 
 ## Threat Scenarios
 
-The container world changed the networking. Without precautions the network where your containers are deployed within is not necessarily divided into zones with strict firewall/routing rules. In a worst case it maybe even flat and every microservice is basically able to talk to all microservices, including interfaces of the management backplane - your orchestration tool or e.g. the host's services.
+The container world changed also the networking. Without precautions the network where your containers are deployed within is not necessarily divided into segments with strict firewall/routing rules. In a worst case it maybe even flat and every microservice is basically able to talk to all microservices, including interfaces of the management backplane - your orchestration tool or e.g. the host's services.
 
 The paradigm having one microservice per containers makes matters from the network security standpoint not easier, as some microservices need to talk to each other while others, in a security point of view, should definitely not.
 
