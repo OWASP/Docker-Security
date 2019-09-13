@@ -1,26 +1,26 @@
 # D03 - Network Segmentation and Firewalling
 
-In the old world one had a secured DMZ (demilitarized zone) managed by an infrastructure or network team which made sure that only the frontend server's service was reachable from the internet. And on the other side this server was able to talk securely to the middleware and backend -- and to nothing else. Management interfaces from a serial console or a baseband management controller were put to a dedicated LAN with strict access controls.
+In the old world one had a secured DMZ (demilitarized zone) managed by an infrastructure or network team which made sure that only the frontend server's service was reachable from the internet. And on the other side this server was able to talk securely to the middleware and backend - and to nothing else. Management interfaces from a serial console or a baseband management controller were put to a dedicated management LAN with strict access controls.
 
 This is basically what network engineers call network segmentation and firewalling. That should be basically your idea when planning a network for your microservices.
 
 ## Threat Scenarios
 
-The container world changed also the networking. Without precautions the network where your containers are deployed within is not necessarily divided into segments with strict firewall/routing rules. In a worst case it maybe even flat and every microservice is basically able to talk to all microservices, including interfaces of the management backplane - your orchestration tool or e.g. the host's services.
+The container world changed also the networking. Without precautions the network where your containers are deployed within is not necessarily divided into segments with strict firewall/routing rules. In a worst case it maybe even flat and any microservice is basically able to talk to all oether microservices, including interfaces of the management backplane - your orchestration tool or e.g. the host's services.
 
-The paradigm having one microservice per containers makes matters from the network security standpoint not easier, as some microservices need to talk to each other while others, in a security point of view, should definitely not.
+The paradigm having one microservice per containers makes matters from the network security standpoint not easier, as some microservices need to talk to each other while others, from a security point of view, should definitely not.
 
-Asking for the biggest trouble is exposing your management interfaces of your orchestration tool in the internet. There have been researches for it [1] and a couple of surprising discoveries [2].
+Asking for the biggest trouble is exposing your management interfaces of your orchestration tool in the internet. There have been researches for it [1] and a couple of surprising discoveries [2]. Please note that also if it is being protected by a login, it means only one step for an attacker getting control over your whole environment.
 
 
 Threats:
 
 * Internet exposed management frontends/APIs from orchestration tool <sup>1)</sup>
 * LAN/DMZ exposed management frontends/APIs from orchestration tool <sup>1)</sup>
+* Access to the host's services from a microservice
 * LAN/DMZ unnecessarily exposed microservices in the LAN from same application ( token,)
 * LAN/DMZ unnecessarily exposed classical services (NFS/Samba, CI/CD appliance, DBs)
 * No 100% network separation between tenants as they share the same network
-* Access to host network from a microservice
 
 Except the first scenario: The threats are that an attacker got access to the local network (LAN/DMZ), e.g. though your compromised frontend service (internet) and moves from there around in this network.
 
@@ -52,10 +52,10 @@ If the network is not flat you probably want to scan from different networks. Th
 
 ## References
 
-   * [1] [Containers at Risk](https://www.lacework.com/containers-at-risk-a-review-of-21000-cloud-environments/)
    * [3]  _The_ tool for network scanning and discovery is [nmap](https://nmap.org).
 
 ### Commercial:
+   * [1] [Containers at Risk](https://www.lacework.com/containers-at-risk-a-review-of-21000-cloud-environments/)
    * [2] https://redlock.io/blog/cryptojacking-tesla
 
 ----
