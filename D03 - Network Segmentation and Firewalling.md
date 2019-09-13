@@ -6,9 +6,9 @@ This is basically what network engineers call network segmentation and firewalli
 
 ## Threat Scenarios
 
-The container world changed also the networking. Without precautions the network where your containers are deployed within is not necessarily divided into segments with strict firewall/routing rules. In a worst case it maybe even flat and any microservice is basically able to talk to all oether microservices, including interfaces of the management backplane - your orchestration tool or e.g. the host's services.
+The container world changed also the networking. Without precautions the network where your containers are deployed within is not necessarily divided into segments with strict firewall/routing rules. In a worst case it maybe even flat and any microservice is basically able to talk to all other microservices, including interfaces of the management backplane - your orchestration tool or e.g. the host's services.
 
-The paradigm having one microservice per containers makes matters from the network security standpoint not easier, as some microservices need to talk to each other while others, from a security point of view, should definitely not.
+The paradigm having one microservice per container makes matters from the network security standpoint not easier, as some microservices need to talk to each other while others, from a security point of view, should definitely not.
 
 Asking for the biggest trouble is exposing your management interfaces of your orchestration tool in the internet. There have been researches for it [1] and a couple of surprising discoveries [2]. Please note that also if it is being protected by a login, it means only one step for an attacker getting control over your whole environment.
 
