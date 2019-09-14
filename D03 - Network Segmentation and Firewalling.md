@@ -10,7 +10,7 @@ The container world changed also the networking. Without precautions the network
 
 The paradigm having one microservice per container makes matters from the network security standpoint not easier, as some microservices need to talk to each other while others, from a security point of view, should definitely not.
 
-Asking for the biggest trouble is exposing your management interfaces of your orchestration tool in the internet. There have been researches for it [1] and a couple of surprising discoveries [2]. Please note that also if it is being protected by a login, it means only one step for an attacker getting control over your whole environment.
+__Asking for the biggest trouble is exposing your management interfaces of your orchestration tool in the internet__. There have been researches for it [1] and a couple of surprising discoveries [2]. Please note that also if it is being protected by a login, it means only one step for an attacker getting control over your whole environment.
 
 
 Threats:
@@ -42,7 +42,7 @@ Do proper network planning upfront:
 
 ## How can I find out?
 
-First you should check whether any of the orchestration tool's management interfaces is exposed in the internet. Scan yourself from a random internet IP [3] to make sure this isn't the case.
+First you should check whether any of the orchestration tool's management interfaces is exposed in the internet. Scan yourself from a random internet IP [3] to make sure this isn't the case. If your environment is volatile it also can't hurt to do regular scanning from the outside to make sure it never happens, or at least if it happens, you will get notified and can take immediate action.
 
 In the DMZ: If the network is segmented and not flat scanning will be quite a task. Network information is best to request beforehand. If this is not possible you can also get an idea by logging into the host(s) and do an `ifconfig` / `ip a ls` and inspect the docker interfaces. Using docker commands you can also list the networks like `for n in $(docker network ls --format="{{.ID}}"); do docker inspect $n; done`.
 
