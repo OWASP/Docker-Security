@@ -56,7 +56,7 @@ If the network is not flat you probably want to scan from different networks. Th
 
 ### Commercial:
    * [1] [Containers at Risk](https://www.lacework.com/containers-at-risk-a-review-of-21000-cloud-environments/)
-   * [2] https://redlock.io/blog/cryptojacking-tesla
+   * [2] RedLock: [Lessons from the Cryptojacking Attack at Tesla](https://redlock.io/blog/cryptojacking-tesla), Arstechnica: Tesla cloud resources are [hacked to run cryptocurrency-mining malware](https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/).
 
 ----
 
