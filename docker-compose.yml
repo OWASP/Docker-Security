@@ -1,0 +1,9 @@
+version: "3.7"
+services:
+  build:
+    build: .
+    image: dockersecbuilder:latest
+    entrypoint: gitbook pdf ./ ./dist/owasp-docker-security.pdf --gitbook=latest
+    volumes:
+      - .:/build
+

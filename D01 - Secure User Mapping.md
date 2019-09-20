@@ -26,7 +26,6 @@ The catch using namespaces is that you can only run one namespace at a time. If 
 
 In any case use user IDs which haven't been taken yet. If you e.g. run a service in a container which maps outside the container to a `systemd` user, this is not necessarily better.
 
-
 ## How can I find out?
 
 #### Configuration
