@@ -1,16 +1,16 @@
 # D02 - Patch Management Strategy
 
-Not patching the infrastructure in a timely fashion is still the most frequent security problem in the IT industry -- see waves of ransomware in the past. Most software defects from "off the shelf software" are well known before exploits are written and used. Sometimes not even a sophisticated exploit is needed. This is similar to OWASP Top 10's "Known Vulnerabilities" [1].
+Not patching the infrastructure in a timely fashion is still the most frequent security problem in the IT industry which proved Viruses like WannaCry or NotPetya. Most software defects from "off the shelf software" are well known for some time before exploits are written and used. Sometimes not even a sophisticated exploit is needed. All you need to do is patching those known vulnerabilities soon enough.
 
-All you need to do is patching those known vulnerabilities soon enough.
+This is similar to OWASP Top 10's "Known Vulnerabilities" [1].
 
-Thus it's necessary to agree and have an approval or at least common understanding _when_ certain patches will be applied. Often this strategy would be a task of an Information Security Officer, an ISO or CISO. But not having an (C)ISO is no excuse for not having a patch management strategy. Please note that the term patch management strategy in this paragraph the scope is not primarily a technical one. Synonymous terms for patch management strategy is patch management policy or plan, or  security SLA is being used.
+It's necessary to agree and have a policy or at least a common understanding _when_ certain patches will be applied. Often this strategy would be a task of an Information Security Officer, an ISO or CISO. Not having an (C)ISO is no excuse for not having a patch management strategy. Please note that the term patch management strategy in this paragraph the scope is not primarily a technical one. Synonymous terms for patch management strategy is patch management policy or plan, or security SLA.
 
 ## Threat Scenarios
 
 The worst thing which can happen to your container environment is that either the host(s) are compromised or the orchestration tool. The first would enable the attacker to control all the containers running on the host, the second will enable the attacker to control all containers on _all_ hosts which the software is managing.
 
-The most severe threats to the host are kernel exploits from within a container through abuse of Linux sys(tem)calls which lead to root access [2]. Also the orchestration software has interfaces whose defaults were weak and have shown numerous problems in the past [3], [4], [5].
+The most severe threats to the host are kernel exploits from within a container through abuse of Linux sys(tem)calls which lead to root access [2]. Also the orchestration software has interfaces whose defaults were weak and have shown numerous problems in the past [3].
 
 While threats from the Linux kernel can be partly mitigated by constraining syscalls further (see D4) and network access restrictions (D3) can be applied to reduce the network vector for the orchestration, it is important to keep in mind that you can't mitigate future security problems, like from remaining syscalls, other than by patching. The likelihood of such an incident might be small, however the impact is huge, thus resulting in a high risk.
 
@@ -61,31 +61,31 @@ Depending on your role there are different approaches. If you are external or no
 Without doing deep researches you can gather good indicators on the host like
 
 * `uptime`
-* When were last patches applied (`rpm --qa --last`, `tail -f /var/log/dpkg.log`). Which patches are pending? (`echo n | yum check-update`, `zypper list-patches --severity important -g security`, `echo n | apt-get upgrade`).
+* When were last patches applied (`rpm --qa --last`, `tail -f /var/log/dpkg.log`). Which patches are pending? (RHEL/CentOS: `echo n | yum check-update`, Suse/SLES: `zypper list-patches --severity important -g security`, Debian/Ubuntu: `echo n | apt-get upgrade`).
 * `ls -lrt /boot/vmlinu*` vs. `uname -a`
 * Have a look at the runtime of processes (`top` --> column `TIME+`) including e.g. `dockerd`, `docker-containerd*` and `kube*` processes
 * Deleted files: `lsof +L1`
 
-If your role is internal within the organization, you need to be sure that a patch management plan exists and is being properly executed. Depending where you start with your policy recommended is [6], [7].
+If your role is internal within the organization, you need to be sure that a patch management plan exists and is being properly executed. Depending where you start with your policy recommended is [4], [5].
 
 ### Automated
 
-Of course regular vulnerability scanning for your third party software can assist you detecting security flaws. The general idea is though to deploy often and only freshly build containers. For the host: patch often. Scanning should never be used as a reactive measure but rather to verify that your that your patching works.
+For the host: patch often! Every Linux vendor nowadays supports automated patching. For monitoring patches there are external tools available for authenticated vulnerability scans like OpenVAS [6]. But also all Linux operation systems provide builtin means notifying you for outstanding security patches.
 
-For the host there are external tools available for authenticated vulnerability scans like OpenVAS [8], but keep in mind that all Linux operation systems provide also builtin means notifying you for outstanding security patches.
- For your container images there are a variety of solutions available [9]. Both use feed data on the CVEs available.
+The general idea for container images is though to deploy often and only freshly build containers. Scanning also here should never be used as a reactive measure but rather to verify that your that your patching works. For your container images there are a variety of solutions available [7]. Both use feed data on the CVEs available.
 
 In any case it's also recommended to make use of plugins for your monitoring software notifying you of pending patches.
 
 ## References
 
+* [1] OWASP's Top 10 2017, A9: [Using Components with Known Vulnerabilities](https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities)
+* [3]: Weak default of etcd in CoreOS 2.1: [The security footgun in etcd](https://gcollazo.com/the-security-footgun-in-etcd)
+* [5] [OpenVAS](http://openvas.org/index.html).
+
 ### Commercial
 
-* [1] OWASP's Top 10 2017, A9: [Using Components with Known Vulnerabilities](https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities)
-* [2] TBD: ~~Example for defective syscall~~
-* [3],[4]: ~~Kubernetes' weak defaults~~
-* [5]: Weak default of etcd in CoreOS 2.1: [The security footgun in etcd](https://gcollazo.com/the-security-footgun-in-etcd)
-* [6] TBD: ~~Good source (1) for patch management, light-weighted (not ITIL, nor ISO 2700x)~~
-* [7] TBD: ~~Another good source (2) for patch management~~
-* [8] [OpenVAS](http://openvas.org/index.html).
-* [9] TBD: ~~what all needs to be listed here?~~
+* [2] Blog of Aquasec: [Dirty COW Vulnerability: Impact on Containers](https://blog.aquasec.com/dirty-cow-vulnerability-impact-on-containers)
+
+* [4] TBD: ~~Good source (1) for patch management, light-weighted (not ITIL, nor ISO 2700x)~~
+* [5] TBD: ~~Another good source (2) for patch management~~
+* [6] TBD: ~~what all needs to be listed here?~~
