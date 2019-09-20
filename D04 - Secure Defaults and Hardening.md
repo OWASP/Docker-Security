@@ -1,6 +1,6 @@
 # D04 - Secure Defaults and Hardening
 
-While *D03 - Network Segmentation and Firewalling* aims for providing a layer of protection for any network based services on the host and the containers and the orchestration tool: it doesn't address the root cause. It mitigates often just the symptom. If there's a network service started which is not needed at all you should rather not start it in the first place. If there's a service started which is needed you should lock it down properly.
+While *D03 - Network Segmentation and Firewalling* aims for providing a layer of protection for any network based services on the host and the containers and the orchestration tool: it doesn't address the root cause. It mitigates often just the symptom. If there's a network service started which is not needed at all you should rather not start it in the first place. And if the service started is needed you should lock it down properly.
 
 ## Threat Scenarios
 
@@ -35,7 +35,7 @@ Also: If your host OS hiccups because of AppArmor or SELinux rules, never switch
 
 ### Container
 
-Also for the containers, best practice is: do no install unnecessary packages [1]. Alpine Linux has a smaller footprint and has per default less binaries on board. It still comes with a set of binaries like `wget` and `netcat` (provided by busybox) though. In a case of an application breakout into the container those binaries could help an attacker "phoning home". So if you want to put the bar higher you should look into "distroless" [2] images.
+Also for the containers, best practice is: do no install unnecessary packages [1]. Alpine Linux has a smaller footprint and has per default less binaries on board. It still comes with a set of binaries like `wget` and `netcat` (provided by busybox) though. In a case of an application breakout into the container those binaries could help an attacker "phoning home" and retrieven some tool. If you want to put the bar higher you should look into "distroless" [2] images.
 
 There are a couple of further options you should look into. What can affect the security of the host kernel are defective syscalls. In a worst case this can lead to a privilege escalation from a container as a user to root on the host. So-called capabilities are a superset from the syscalls.
 
@@ -50,14 +50,12 @@ Best practise is to settle which of the above you chose. Better do not mix capab
 
 ## How can I find out?
 
-* You can always scan the system from the same network to see what is exposed in this LAN. In D03 it is described how to do that.
-* Better is to look into the system.
-    * Host: Log into it with administrative privileges and see what's running using `netstat -tulpn | grep -v ESTABLISHED` or `lsof -i -Pn| grep -v ESTABLISHED`. This won't return the network sockets from the containers though. 
-    * In a container you can use those commands as well if `netstat` or `lsof` is supplied by the image.
-* Any services might also be protected by the host-based firewall. What rules will be applied via default varies from host OS to host OS. As just reading the output from `iptables -t nat -L -nv` and  `iptables -L -nv` becomes in larger container environments quickly a tedious task, it's a good idea to also scan the LAN.
-
-#####FIXME: --> CIS
-
+* Special attention is needed for your orchestration tool. There have been unprotected interfaces by (bad) design [6], [7]-[9].
+* You can always scan the system from the same network to see what is exposed in this LAN. D03 describes how to do that.
+* Better is to look onto the system.
+    * Host: Log in with administrative privileges and see what's running using `netstat -tulpn | grep -v ESTABLISHED` or `lsof -i -Pn| grep -v ESTABLISHED`. This won't return the network sockets from the containers though.
+    * In a container you can use those commands as well - if `netstat` or `lsof` is supplied by the image.
+* Any services might also be protected by the host-based firewall. What rules will be applied via default varies from host OS to host OS. As just reading the output from `iptables -t nat -L -nv` and  `iptables -L -nv` becomes in larger container environments quickly a tedious task. Thus here it's a good idea to also scan the LAN.
 
 ## References
 
@@ -65,10 +63,14 @@ Best practise is to settle which of the above you chose. Better do not mix capab
 * [2] Google's FLOSS project [distroless](https://github.com/GoogleContainerTools/distroless)
 * [3] Docker Documentation: [Runtime privilege and Linux capabilities](https://docs.docker.com/engine/reference/run/#runtime-privilege-and-linux-capabilities)
 * [5] [Docker Documentation, Seccomp security profiles for Docker](https://docs.docker.com/engine/security/seccomp/)
+* [6] Weak default of etcd in CoreOS 2.1: [The security footgun in etcd](https://gcollazo.com/the-security-footgun-in-etcd)
+* [7] Kubernetes documentation: [Controlling access to the Kubelet](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/#controlling-access-to-the-kubelet): _Kubelets expose HTTPS endpoints which grant powerful control over the node and containers. By default Kubelets allow unauthenticated access to this API. Production clusters should enable Kubelet authentication and authorization._
+* [8] Github: ["Exploit"](https://github.com/kayrus/kubelet-exploit) for the API in [7].
+* [9] Medium: [Analysis of a Kubernetes hack — Backdooring through kubelet](https://medium.com/handy-tech/analysis-of-a-kubernetes-hack-backdooring-through-kubelet-823be5c3d67c). Incident because of an open API, see [7].
 
 ### Commercial
 
-* [6] [Secure your Container: One weird trick](https://www.redhat.com/en/blog/secure-your-containers-one-weird-trick)
+* [4] RedHat Blog: Secure your Container: [One weird trick](https://www.redhat.com/en/blog/secure-your-containers-one-weird-trick)
 
 
 
