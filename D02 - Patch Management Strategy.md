@@ -10,7 +10,7 @@ It's necessary to agree and have a policy or at least a common understanding _wh
 
 The worst thing which can happen to your container environment is that either the host(s) are compromised or the orchestration tool. The first would enable the attacker to control all the containers running on the host, the second will enable the attacker to control all containers on _all_ hosts which the software is managing.
 
-The most severe threats to the host are kernel exploits from within a container through abuse of Linux sys(tem)calls which lead to root access [2]. Also the orchestration software has interfaces whose defaults were weak and have shown numerous problems in the past [3].
+The most severe threats to the host are kernel exploits from within a container through abuse of Linux sys(tem)calls which lead to root access [2]. Also the orchestration software has interfaces whose defaults were weak and have shown numerous problems in the past [3],[4].
 
 While threats from the Linux kernel can be partly mitigated by constraining syscalls further (see D4) and network access restrictions (D3) can be applied to reduce the network vector for the orchestration, it is important to keep in mind that you can't mitigate future security problems, like from remaining syscalls, other than by patching. The likelihood of such an incident might be small, however the impact is huge, thus resulting in a high risk.
 
@@ -37,7 +37,7 @@ Have a migration plan for EOL support for each domain mentioned.
 
 ### When to patch what?
 
-In short: patch often and automated.
+In short: patch often and if possible automated.
 
 Depending on the patch domains mentioned above there are different approaches how proper patching can be achieved. Important is to have a patch strategy for each component. Your patch strategy should handle _regular_ and _emergency_ patches. You also need to be prepared for testing patches and rollback procedures.
 
@@ -50,7 +50,7 @@ If you aren't in an environment which has change or patch policies or processes,
 
 Keep in mind that some patches require a restart of their service, a new deployment (container image) or even a reboot (host) to become effective. If this won't be done, your patching otherwise could be as effective as just not to patch. Technical details when to restart a service, a host or initiate a new deployment need to be defined in the the patch plan too.
 
-It helps a lot if you have planned for redundancy, so that e.g. a new deployment of a container or a reboot of a host won't affect your service.
+It helps a lot if you have planned for redundancy, so that e.g. a new deployment of a container or a reboot of a host won't affect your services.
 
 ## How can I find out?
 
@@ -66,7 +66,7 @@ Without doing deep researches you can gather good indicators on the host like
 * Have a look at the runtime of processes (`top` --> column `TIME+`) including e.g. `dockerd`, `docker-containerd*` and `kube*` processes
 * Deleted files: `lsof +L1`
 
-If your role is internal within the organization, you need to be sure that a patch management plan exists and is being properly executed. Depending where you start with your policy recommended is [4], [5].
+If your role is internal within the organization, you need to be sure that a patch management plan exists and is being properly executed. Depending where you start with your policy recommended is [5].
 
 ### Automated
 
@@ -80,12 +80,12 @@ In any case it's also recommended to make use of plugins for your monitoring sof
 
 * [1] OWASP's Top 10 2017, A9: [Using Components with Known Vulnerabilities](https://www.owasp.org/index.php/Top_10-2017_A9-Using_Components_with_Known_Vulnerabilities)
 * [3]: Weak default of etcd in CoreOS 2.1: [The security footgun in etcd](https://gcollazo.com/the-security-footgun-in-etcd)
+* [4]: cvedetails on [Kubernetes](https://www.cvedetails.com/vulnerability-list/vendor_id-15867/product_id-34016/Kubernetes-Kubernetes.html), [Rancher](https://www.cvedetails.com/vulnerability-list/vendor_id-19744/product_id-53073/Rancher-Rancher.html)
 * [5] [OpenVAS](http://openvas.org/index.html).
 
 ### Commercial
 
 * [2] Blog of Aquasec: [Dirty COW Vulnerability: Impact on Containers](https://blog.aquasec.com/dirty-cow-vulnerability-impact-on-containers)
 
-* [4] TBD: ~~Good source (1) for patch management, light-weighted (not ITIL, nor ISO 2700x)~~
-* [5] TBD: ~~Another good source (2) for patch management~~
+* [5] TBD: ~~Good source (1) for patch management, light-weighted (not ITIL, nor ISO 2700x)~~
 * [6] TBD: ~~what all needs to be listed here?~~
