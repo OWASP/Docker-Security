@@ -1,7 +1,7 @@
 FROM node:current-slim
 
-RUN apt-get update
-RUN apt-get install -y git calibre
+RUN apt-get update && \
+    apt-get install -y git calibre
 
 RUN mkdir /build && chown node:node /build && chmod 0750 /build
 
