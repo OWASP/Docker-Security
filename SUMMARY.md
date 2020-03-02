@@ -6,7 +6,7 @@ Summary
 * [Overview](D00 - Overview.md)
 * [D01 - Secure User Mapping](D01 - Secure User Mapping.md)
 * [D02 - Patch Management Stategy](D02 - Patch Management Strategy.md)
-* [D03 - Network Separation and Firewalling](D03 - Network Separation and Firewalling.md)
+* [D03 - Network Segmentation and Firewalling](D03 - Network Segmentation and Firewalling.md)
 * [D04 - Secure Defaults and Hardening](D04 - Secure Defaults and Hardening.md)
 * [D05 - Maintain Securty Contexts](D05 - Maintain Security Contexts.md)
 * [D06 - Protect Secrets](D06 - Protect Secrets.md)
