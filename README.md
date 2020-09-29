@@ -13,7 +13,7 @@ will do this for you.
 It can also be used to audit or secure an existing installation but especially
 here you should start thinking about security very early. Best is in the design
 phase. Later on it becomes either difficult to change some decisions you made or
-they becomes costly, in terms of money or time.
+they become costly, in terms of money or time.
 
 ### Name
 
@@ -35,10 +35,10 @@ have to be an expert in those -- that's what this guide is for. But as indicated
 above best is to start thinking about and addressing those points early. Please
 do not just start building it.
 
-One of the bullet point should not be misunderstood: Patch management is not a
+One of the bullet points should not be misunderstood: Patch management is not a
 techincal point. It's a management process. Last but not least for technical or
 information security management who has not been much worried about
-containerization this document also provides insights about the risks involve.
+containerization this document also provides insights about the risks involved.
 
 ### Structure of this document
 
