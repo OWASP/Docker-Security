@@ -36,7 +36,7 @@ above best is to start thinking about and addressing those points early. Please
 do not just start building it.
 
 One of the bullet points should not be misunderstood: Patch management is not a
-techincal point. It's a management process. Last but not least for technical or
+technical point. It's a management process. Last but not least for technical or
 information security management who has not been much worried about
 containerization this document also provides insights about the risks involved.
 
@@ -74,7 +74,7 @@ currently beyond the scope of this document. That does not mean that this guide
 is just concerning one or a few containers managed manually -- on the contrary.
 It means only that we're looking at the containers including their networking
 and their host systems in such an orchestrated environment and not on special
-pitfalls of e.g. _Kubernetes_, _Swarm_, _Mesos_ or  _OpenShift_.
+pitfalls of e.g. _Kubernetes_, _Swarm_, _Mesos_ or _OKD/OpenShift_.
 
 ### Why ten?
 
