@@ -43,7 +43,7 @@ Here are some defenses:
 
 * Disable SUID/SGID bits (`--security-opt no-new-privileges`): even if you run as a user, SUID binaries could elevate privileges. Or use `--cap-drop=setuid --cap-drop=setgid` when applying the following.
 * Drop more capabilities (`--cap-drop`): Docker restricts the so-called capabilities of a container from 38 (see `/usr/include/linux/capability.h`) to 14 (see ``man 7 capabilities`` and [3]). Likely you can drop a few like `net_bind_service`, `net_raw` and more, see [4]. `pscap` is your tool on the host to list capabilities.  Never use `--cap-add=all`.
-* If you need finer grained controls as the capabilities can provide you can control each of the >300 syscalls with seccomp with a profile in JSON  (`--security-opt seccomp=mysecure.json`), see [5]. About 44 syscalls are already disabled by default. Do not use `unconfined` or `apparmor=unconfined` here.
+* If you need finer grained controls than the capabilities can provide you can control each of the >300 syscalls with seccomp with a profile in JSON  (`--security-opt seccomp=mysecure.json`), see [5]. About 44 syscalls are already disabled by default. Do not use `unconfined` or `apparmor=unconfined` here.
 
 Best practise is to settle which of the above you chose. Better do not mix capabilities setting and seccomp profiles.
 

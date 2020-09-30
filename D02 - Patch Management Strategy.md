@@ -4,7 +4,7 @@ Not patching the infrastructure in a timely fashion is still the most frequent s
 
 This is similar to OWASP Top 10's "Known Vulnerabilities" [1].
 
-It's necessary to agree and have a policy or at least a common understanding _when_ certain patches will be applied. Often this strategy would be a task of an Information Security Officer, an ISO or CISO. Not having an (C)ISO is no excuse for not having a patch management strategy. Please note that the term patch management strategy in this paragraph the scope is not primarily a technical one. Synonymous terms for patch management strategy is patch management policy or plan, or security SLA.
+It's necessary to agree and have a policy or at least a common understanding _when_ certain patches will be applied. Often this strategy would be a task of an Information Security Officer, an ISO or CISO. Not having an (C)ISO is no excuse for not having a patch management strategy. Please note that by the term patch management strategy in this paragraph the scope intended is not primarily a technical one. Synonymous terms for patch management strategy are patch management policy or plan, or security SLA.
 
 ## Threat Scenarios
 
@@ -16,7 +16,7 @@ While threats from the Linux kernel can be partly mitigated by constraining sysc
 
 Patching timely makes sure that your software you are using for your infrastructure is always secure and you avoid known vulnerabilities.
 
-Another threat arises from any Linux services on the host. Also if the host configuration is reasonable secured (see D3 and D4) e.g. a vulnerable `sshd` poses a threat to your host too. If the services is not secured via network and configuration, the risk is higher.
+Another threat arises from any Linux services on the host. Also if the host configuration is reasonably secured (see D3 and D4) e.g. a vulnerable `sshd` poses a threat to your host too. If the services are not secured via network and configuration, the risk is higher.
 
 You should also keep an eye on the support life time of each "ops" component used. If e.g. the host OS or orchestration software has run out of support, you likely won't be able to address security issues.
 
@@ -44,11 +44,11 @@ Depending on the patch domains mentioned above there are different approaches ho
 If you aren't in an environment which has change or patch policies or processes, the following is recommended (test procedures omitted for simplicity):
 
 * Define a time span in which pending patches will be applied on a _regular basis_. This process should be automated.
-* This can be different for each patch domain -- as the risk might be different -- but it doesn't have to. It may differ due to different risks: An exposed container, an API from your orchestration software or a severe kernel bug a higher risk then container the DB backend or a piece of middleware.
+* This can be different for each patch domain -- as the risk might be different -- but it doesn't have to. It may differ due to different risks: An exposed container, an API from your orchestration software or a severe kernel bug are a higher risk than container, the DB backend or a piece of middleware.
 * Execute patch cycles and monitor them for success and failures, see below.
 * For critical patches to your environment where the time span between the regular patches is too large for an attacker you need to define a policy for emergency patches which need to be followed in such a case. You also need a team which tracks critical vulnerabilities and patches, e.g. through vendor announcements or through security mailing lists. Emergency patches are normally applied within days or about a week.
 
-Keep in mind that some patches require a restart of their service, a new deployment (container image) or even a reboot (host) to become effective. If this won't be done, your patching otherwise could be as effective as just not to patch. Technical details when to restart a service, a host or initiate a new deployment need to be defined in the the patch plan too.
+Keep in mind that some patches require a restart of their service, a new deployment (container image) or even a reboot (host) to become effective. If this won't be done, your patching otherwise could be as effective as just not to patch. Technical details when to restart a service, a host or initiate a new deployment need to be defined in the patch plan too.
 
 It helps a lot if you have planned for redundancy, so that e.g. a new deployment of a container or a reboot of a host won't affect your services.
 
@@ -72,7 +72,7 @@ If your role is internal within the organization, you need to be sure that a pat
 
 For the host: patch often! Every Linux vendor nowadays supports automated patching. For monitoring patches there are external tools available for authenticated vulnerability scans like OpenVAS [6]. But also all Linux operation systems provide builtin means notifying you for outstanding security patches.
 
-The general idea for container images is though to deploy often and only freshly build containers. Scanning also here should never be used as a reactive measure but rather to verify that your that your patching works. For your container images there are a variety of solutions available [7]. Both use feed data on the CVEs available.
+The general idea for container images is though to deploy often and only freshly build containers. Scanning also here should never be used as a reactive measure but rather to verify that your patching works. For your container images there are a variety of solutions available [7]. Both use feed data on the CVEs available.
 
 In any case it's also recommended to make use of plugins for your monitoring software notifying you of pending patches.
 

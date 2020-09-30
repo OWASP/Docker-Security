@@ -10,7 +10,7 @@
 | D06 - Protect Secrets | Authentication and authorization of a microservice against a peer or a third party requires secrets to be provided. For an attacker those secrets potentially enable him to access more of your data or services. Thus any passwords, tokens, private keys or certificates need to be protected as good as possible. |
 | D07 - Resource Protection | As all containers share the same physical CPU, disks, memory and networks. Those physical resources need to be protected so that a single container running out of control -- deliberately or not -- doesn't affect any other container's resources. |
 | D08 - Container Image Integrity and Origin | The minimal operating system in the container runs your code and needs to be trustworthy, starting from the origin up until the deployment. You need to make sure that all transfers and images at rest haven't been tampered with.  |
-| D09 - Follow Immutable Paradigm | Often container images don't need to write into their filesystem or a mounted filesystem, once set up and deployed. In those cases you have a extra security benefit if you start the containers in read-only mode. |
+| D09 - Follow Immutable Paradigm | Often container images don't need to write into their filesystem or a mounted filesystem, once set up and deployed. In those cases you have an extra security benefit if you start the containers in read-only mode. |
 | D10 - Logging | For your container image, orchestration tool and host you need to log all security relevant events on a system and API level. All logs should be remote, they should contain a common timestamp and they should be tamper proof. Your application should also provide remote logging.
 
 
