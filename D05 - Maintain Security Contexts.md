@@ -33,7 +33,7 @@ As a general rule of thumb it's not recommended to mix containers with different
 ## How can I find out?
 
 As an external auditor it's the best to get the system's architecture explained.
-In addition by logging in to the bare metal system you can check whether there are processes running which look like a VM process (e.g. `qemu-system-x86_64`) or docker processes only. QEMU processes or `virsh list --all` gives at least a hint that the virtualization KVM is running. What's inside those VMs is best to analyze when you log into the VM. KVM/libvirt (including QEMU) is only one virtualization technology under Linux using its own kernel. There's also Xen, VirtualBox and VMWare.
+In addition by logging in to the bare metal system you can check whether there are processes running which look like a VM process (e.g. `qemu-system-x86_64`) or docker processes only. QEMU processes or `virsh list --all` gives at least a hint that the virtualization KVM is running. What's inside those VMs is best to analyze when you log into the VMs. KVM/libvirt including QEMU is one of the virtualization technologies under Linux using its own kernel. There's also VirtualBox,  VMWare and Xen.
 
 In any case it's important to find out whether the separation of the systems reflect their security contexts.
 
