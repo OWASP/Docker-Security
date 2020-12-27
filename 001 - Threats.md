@@ -1,15 +1,16 @@
 
-# Threat Modeling
+# Modelagem de Ameaça
 
-The classical approach how to secure an environment is looking at it from the attacker perspective and enumerate vectors for an attack. This is what this chapter is about.
+A abordagem clássica para trazer segurança para um ambiente é olhar para ele da perspectiva do atacante e enumerar os vetores de ataque. É a respeito disto que trata este capítulo.
 
-Those vectors will help you to define what needs to be protected. With this definition one can put security controls in place to provide a baseline protection and beyond. This is what the ten controls in the following chapters are about.
+Estes vetores vão contribuir para definir o que precisa ser protegido. Com esta definição pode-se colocar contoles de segurança para prover uma linha de base de proteção e evoluir com o tempo. É sobre isto que os dez controles abaixo dissertam.
 
-The following image gives an overview of threats in docker.
+A imagem abaixo trás uma visão geral das ameaças no docker.
 ![threat-overview](assets/threats.png)
 
-
 ### Threat 1: Container Escape (System)
+
+Neste cenário a aplicação é insegura de uma forma que um tipo de acesso ao shell torna-se possível. Então o atacante oriundo da internet pode com sucesso iniciar um ataque onde ele gerencia
 
 In this scenario the application is insecure in a way that some kind of shell access is possible. So the attacker managed e.g. from the internet to successfully stage an attack in which he has managed to escape the application and ended up to be in the container. The container is as the name indicates supposed to contain him.
 

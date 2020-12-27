@@ -1,60 +1,56 @@
 # D01 - Secure User Mapping
 
+## Cenários de ameaça
 
-## Threat Scenarios
+A ameaça aqui refere-se ao microserviço em execução com a conta `root` no container. Caso o serviço contenha uma fragilidade o atacante terá privilégios totais dentro daquele container. Embora existam proteções padrão disponíveis (Capacidades do Linux e mesmo AppArmor ou perfis do SELinux), esta configuração remove uma camada extra de proteção. Esta camada aberta aumenta a superfície de ataque e também viola o conceito do mínimo privilégio [1] e da perspectiva do OWASP é insegura por padrão. 
 
-The threat is here that a microservice is being offered to run under `root` in the container. If the service contains a weakness the attacker has full privileges within the container. While there's still some default protection left (Linux capabilities, either AppArmor or SELinux profiles) it removes one layer of protection. This extra layer broadens the attack surface. It also violates the least privilege principle [1] and from the OWASP perspective is an insecure default.
+Para containers privilegiados (`--privileged`) uma quebra de um microserviço em containers é comparável à execução sem nenhum container. Containeres privilegiados arriscam todo o host e todos os demais containers.
 
-For privileged containers (`--privileged`) a breakout from the microservice into the container is almost comparable to run without any container. Privileged containers endanger your whole host and all other containers.
+## Como prevenir?
 
+É importante executar seu microserviço com o mínimo privilégio possível.
 
-## How Do I prevent?
+Primeiro lugar: Nunca utilize a opção `--privileged`. Esta opção concede capacidades (veja o item D04) do container acessar dispositivos do host principal (`/dev`) incluindo os discos, e também concede acesso a `/sys` e `/proc` no sistema de arquivos. Com um pouco de trabalho o container pode ainda carregar módulos no kernel do host [2]. A boa prática é que containers devem ser desprivilegiados por padrão. Você deverá configurar explicitamente para executá-los em modo privilegiado.
 
-It is important to run your microservice with the least privilege possible.
+Entretanto a execução de seu microserviço a partir de uma credencial de usuário diferente da root requer configuração extra. Você precisa configurar uma distribuição mínima do seu container para que ambos contenam o usuário (e talvez também um grupo) e então o serviço precisa usar este mesmo usuário e grupo.
 
-First of all: Never use the `--privileged` flag. It gives all so-called capabilities (see D04) to the container and it can access host devices (`/dev`) including disks, and also has access to the `/sys` and `/proc` filesystem. And with a little work the container can even load kernel modules on the host [2]. The good thing is that containers are per default unprivileged. You would have to configure them explicitly to run privileged.
+Basicamente existem aqui duas opções.
 
-However still running your microservice under a different user as root requires configuration. You need to configure your mini distribution of your container to both contain a user (and maybe a group) and your service needs to make use of this user and group.
+Em um cenário simplificado se você mesmo compila seu container, você precisa adicionar `RUN useradd <username>` ou `RUN adduser <username>` com os parâmetros apropriado -- respectivamente a mesma coisa para grupos. Então, antes de iniciar o microserviço, use `USER <username>` [3] para fazer a mudança para este usuário. Vale notar que um servidor web padrão necessita usar portas como 80 ou 443. Configurar o usuário não o habilita a fazer uso de portas abaixo da 1024. Não há necessidade de fazer a vinculação de portas baixas ou serviços. Você precisa configurar uma porta alta e mapear esta porta de acordo usando o comando de exposição [4]. Seu caminho será mais ou longo ou curto a depender da ferramenta de orquestração que esteja utilizando.
 
-Basically there are two choices.
+A segunda opção poderá ser a utilização de *user namespaces* do Linux. Namespaces é uma maneira de prover ao container uma diferente (e falsa) visão dos recursos do kernel do Linux. Existem diferentes recursos disponíveis como User, Rede, PID, IPC, veja `namespaces(7)`. No caso de *user namespaces* um container pode ser provido de uma visão relativa de um usuário root do host que na verdade está mapeado para outro usuário. Para mais informações veja [5], `cgroup_namespaces(7)` e `user_namespaces(7)`.
 
-In a simple container scenario if you build your container you have to add `RUN useradd <username>` or `RUN adduser <username>` with the appropriate parameters -- respectively the same applies for group IDs. Then, before you start the microservice, the `USER <username>` [3] switches to this user. Please note that a standard web server wants to use a port like 80 or 443. Configuring a user doesn't let you bind the server on any port below 1024. There's no need at all to bind to a low port for any service. You need to configure a higher port and map this port accordingly with the expose command [4]. Your mileage may vary if you're using an orchestration tool.
+A desvantagem no uso de namespaces é que você pode pode executar um deles ao mesmo tempo. Se você executa um namespace de usuário que não pode acessar o namespace de rede [6], você não pode usar também em todos os demais containers, exceto que você faça a configuração explícita para cada container.
 
-The second choice would be using Linux *user namespaces*. Namespaces are a general means to provide to a container a different (faked) view of Linux kernel resources. There are different resources available like User, Network, PID, IPC, see `namespaces(7)`. In the case of *user namespaces* a container could be provided with a relative perspective of a standard root user whereas the host kernel maps this to a different user ID. More, see [5], `cgroup_namespaces(7)` and `user_namespaces(7)`.
+Em todo caso utilize IDs de usuário que não estejam em uso ainda. Se você, por exemplo, executar um container que externamente ao container esteja com o usuário `systemd`, isto não é necessariamente melhor.
 
-The catch using namespaces is that you can only run one namespace at a time. If you run user namespacing you e.g. can't use network namespacing on the same host [6]. Also, all your containers on a host will be defaulted to it, unless you explicitly configure this differently per container.
+## Como posso descobrir?
 
-In any case use user IDs which haven't been taken yet. If you e.g. run a service in a container which maps outside the container to a `systemd` user, this is not necessarily better.
+#### Configuração
 
-## How can I find out?
-
-#### Configuration
-
-Depending on how you start your containers the first place is to have a look into the configuration / build file of your container whether it contains a user.
+Dependendo de como você inicia seus containers o primeiro lugar a verificar são os arquivos de configuração e compilação do seu container se eles possuem um usuário.
 
 #### Runtime
 
-Have a look in the process list of the host, or use `docker top` or `docker inspect`.
+Dê uma verificada na lista de processos do host, ou utilize `docker top` ou `docker inspect`.
 
 1) `ps auxwf`
 
-2) `docker top <containerID>` or `for d in $(docker ps -q); do docker top $d; done`
+2) `docker top <containerID>` ou `for d in $(docker ps -q); do docker top $d; done`
 
-3) Determine the value of the key `Config/User` in `docker inspect <containerID>`. For all running containers: `docker inspect $(docker ps -q) --format='{{.Config.User}}'`
+3) Determina o valor da chave `Config/User` no `docker inspect <containerID>`. Para todos os containers em execução: `docker inspect $(docker ps -q) --format='{{.Config.User}}'`
 
-#### User namespaces
+#### Namespaces de usuários
 
-The files `/etc/subuid` and `/etc/subgid` do the UID mapping for all containers. If they don't exist and `/var/lib/docker/` doesn't contain any other entries owned by `root:root` you're not using any UID remapping. On the other hand if those files exist and there are files in that directory you still need to check whether your docker daemon was started with `--userns-remap` or the config file `/etc/docker/daemon.json` was used.
+Os arquivos `/etc/subuid` e `/etc/subgid` possuem um ID de mapeamento para cada um dos containers. se ele não existe e o diretório `/var/lib/docker/` não possui nenhuma entrada em propriedade do `root:root` você não está utilizando nenhum mapeamento de ID de usuário. De outra forma se os arquivos existem no diretório você deverá verificar se o deamon do docker foi iniciato com `--userns-remap` ou ainda se o arquivo de configuração `/etc/docker/daemon.json` foi utilizado.
 
-
-
-## References
+## Referêcias
 * [1] [OWASP: Security by Design Principles](https://www.owasp.org/index.php/Security_by_Design_Principles#Principle_of_Least_privilege)
 * [3] [Docker Docs: USER command](https://docs.docker.com/engine/reference/builder/#user)
 * [4] [Docker Docs: EXPOSE command](https://docs.docker.com/engine/reference/builder/#expose)
 * [5] [Docker Docs: Isolate containers with a user namespace](https://docs.docker.com/engine/security/userns-remap/)
 * [6] [Docker Docs: User namespace known limitations](https://docs.docker.com/engine/security/userns-remap/#user-namespace-known-restrictions)
 
-### Commercial
+### Comercial
 
 * [2] [How I Hacked Play-with-Docker and Remotely Ran Code on the Host](https://www.cyberark.com/threat-research-blog/how-i-hacked-play-with-docker-and-remotely-ran-code-on-the-host/)
