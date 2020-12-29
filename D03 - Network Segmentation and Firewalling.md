@@ -38,6 +38,10 @@ Do proper network planning upfront:
 * Protect management frontends/APIs. Never ever expose them in the internet. If you really, really need to, only allow the trusted IPs necessary.
 * Also don't expose them in the DMZ. This is your management backplane. It needs strict white-list based network protection
 * Protect the host services in the same manner.
+* In an orchestrated environment make sure that you have
+  * first a proper ingress network and routing policy
+  * secondly a proper egress network policy (restrict downloads from the internet as much as possible)
+  * then decide for which container intercommunication is needed and may posed a threat
 
 
 ## How can I find out?
