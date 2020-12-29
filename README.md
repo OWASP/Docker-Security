@@ -50,12 +50,13 @@ impacts but also gives you the ability to prioritize your tasks.
 
 ### How to Build PDF version
 
-You can build yourself a PDF version as long as you have Docker (and [docker
-compose][1]) installed.
+You can build yourself a PDF version as long as you have Docker installed.
 
 ```
-docker-compose run --rm build
+docker build -t mypdf .
 ```
+
+It's not frequently updated in this repository as it otherwise clogs this repo.
 
 ## FAQ
 
@@ -74,12 +75,11 @@ currently beyond the scope of this document. That does not mean that this guide
 is just concerning one or a few containers managed manually -- on the contrary.
 It means only that we're looking at the containers including their networking
 and their host systems in such an orchestrated environment and not on special
-pitfalls of e.g. _Kubernetes_, _Swarm_, _Mesos_ or _OKD/OpenShift_.
+pitfalls of e.g. _Kubernetes_, _Swarm_, _Rancher_ or _OKD/OpenShift_.
 
 ### Why ten?
 
 To be honest for us humans the number 10 sounds catchy and while putting it all
 together those 10 were considered to be the most important ones.
 
-[1]: https://docs.docker.com/compose/
 
