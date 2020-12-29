@@ -1,9 +1,10 @@
 FROM node:current-slim
 
 RUN apt-get update && \
-    apt-get install -y git calibre
-
-RUN mkdir /build && chown node:node /build && chmod 0750 /build
+    apt-get install -y git calibre && \
+    apt-get clean && \
+    mkdir /build && \
+    chown node:node /build && chmod 0750 /build
 
 # Install custom gitbook version
 RUN npm i gitbook-cli -g 
