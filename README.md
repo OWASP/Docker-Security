@@ -44,7 +44,7 @@ containerization this document also provides insights about the risks involved.
 
 Security in Docker environments seemed often to be misunderstood. It was`/`is a
 highly disputed matter what the threats are supposed to be. So before diving
-into the Docker Top 10 bullet points, the threads need to be modeled which is
+into the Docker Top 10 bullet points, the threats need to be modeled which is
 happening upfront in this document. It not only helps to understand any security
 impacts but also gives you the ability to prioritize your tasks.
 
