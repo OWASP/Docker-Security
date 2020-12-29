@@ -1,4 +1,4 @@
-FROM node:current-slim
+FROM node:12.11.1-slim
 
 RUN apt-get update && \
     apt-get install -y git calibre && \
@@ -16,4 +16,3 @@ RUN git clone -b fix/filename-regex https://github.com/PauloASilva/gitbook.git ~
     gitbook alias ~/gitbook-custom latest
 
 WORKDIR /build
-
