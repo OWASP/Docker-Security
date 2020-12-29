@@ -50,10 +50,11 @@ impacts but also gives you the ability to prioritize your tasks.
 
 ### How to Build PDF version
 
-You can build yourself a PDF version as long as you have Docker installed.
+You can build yourself a PDF version as long as you have Docker and docker-compose 
+installed.
 
 ```
-docker build -t mypdf .
+docker-compose run --rm build
 ```
 
 It's not frequently updated in this repository as it otherwise clogs this repo.
