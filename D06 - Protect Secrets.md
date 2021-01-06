@@ -1,15 +1,15 @@
 # D06 - Protect Secrets
 
 Secrets provide access to resources or help encrypting data in transit or at
-rest. Secrets could be private keys for a X509 certificate, HMACs for JWT or similar
-cryptograptographic material. Also it could be just secrets which provide necessary
+rest. Secrets could be private keys for an X509 certificate, HMACs for JWT or similar
+cryptographic material. Also, it could be just secrets which provide necessary
 access or just holds credentials. Think of backend connectors to databases, API keys,
 image registry keys or any other tokens which provide access to an internal or
 external service.
 
-Often you cannot avoid to provide some kind of keys or credentials to be provided
+Often you cannot avoid providing some kind of keys or credentials to be provided
 by a container.  E.g. the frontend container needs to have access to a private key,
-otherwise the HTTPS webservice won't start. Also a container with a database connector
+the HTTPS web service won't start otherwise. Also, a container with a database connector
 needs to have access to the database credentials. Or, if you encrypt the database
 content: somewhere needs to be a key / the keys for encryption and decryption.
 
