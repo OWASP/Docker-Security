@@ -22,7 +22,7 @@ In a simple container scenario if you build your container you have to add `RUN 
 
 The second choice would be using Linux *user namespaces*. Namespaces are a general means to provide to a container a different (faked) view of Linux kernel resources. There are different resources available like User, Network, PID, IPC, see `namespaces(7)`. In the case of *user namespaces* a container could be provided with a relative perspective of a standard root user whereas the host kernel maps this to a different user ID. More, see [6], `cgroup_namespaces(7)` and `user_namespaces(7)`.
 
-The catch using namespaces is that you can only run one namespace at a time. If you run user namespacing you e.g. can't use network namespacing on the same host [7]. Also, all your containers on a host will be defaulted to it, unless you explicitly configure this differently per container.
+User namespace does come with some limitations [7]. If you run user namespacing you e.g. can't share network/pid namespace with the host `--pid=host` or `--network=host`. Also, all your containers on a host will be defaulted to it, unless you explicitly configure this differently per container.
 
 In any case use user IDs which haven't been taken yet. If you e.g. run a service in a container which maps outside the container to a `systemd` user, this is not necessarily better.
 
