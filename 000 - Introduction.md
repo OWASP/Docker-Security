@@ -22,7 +22,7 @@ Looking at it from the perspective of the classical world, especially in system 
 
 Apart from these technical areas there are two non-technical points:
 
-* Docker with its 5 years is a relatively new technology. Subtracting the time for maturing and adoption the time span is even shorter. Every new technology needs time until the knowledge of the technology and their best practices becomes common knowledge.
+* Docker is not a new technology anymore but subtracting the time for maturing and adoption, its time span is shorter. Every technology needs time until the knowledge of the technology and their best practices becomes common knowledge.
 * While container solutions might offer benefits for the developer, the technology is not simple from the security perspective. Not being simple is what makes security more difficult, a.k.a. the _KISS principle_ -- keep it simple and stupid.
 
 This is what this document is trying to help you with: It provides you with the knowledge to avoid common pitfalls in the system and network area and it tries to get a handle on the complexity.
@@ -31,4 +31,12 @@ This is what this document is trying to help you with: It provides you with the 
 
 In order to achieve this, this document first does an analysis of the threats caused by the technology. This is the basis for the ten points to follow.
 
+Each of those ten points has paragraphs in the following order:
 
+  * introduction,
+  * outline of threat scenarios,
+  * recommendation how to prevent the aforementioned threats,
+  * technical hint how to identify whether you might a problem here
+  * and eventually lists references (split in commercial and non-commercial ones) 
+
+It is mostly agnostic to any orchestration framework or any other specific product (OS, programming language).
