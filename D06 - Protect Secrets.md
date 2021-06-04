@@ -2,7 +2,7 @@
 
 
 ## Threat Scenarios
-- in worst Case Secrets would be stored somewhere in our Container Environment
+- in worst Case Secrets would be stored in our Container Environment in kind of dockerfile definitions of environment variables
 - exposed environment variables 
 - priviliged access, in worst case as root user
 
