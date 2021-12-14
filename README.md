@@ -48,9 +48,15 @@ into the Docker Top 10 bullet points, the threats need to be modeled which is
 happening upfront in this document. It not only helps to understand any security
 impacts but also gives you the ability to prioritize your tasks.
 
+### Contribution
+
+Please see CONTRIBUTING.md. To ease contributions to the the open points please
+file your PRs against the corresponding dev branches (D06_dev, D07_dev, ...).
+
+
 ### How to Build PDF version
 
-You can build yourself a PDF version as long as you have Docker and docker-compose 
+You can build yourself a PDF version as long as you have Docker and docker-compose
 installed.
 
 ```
