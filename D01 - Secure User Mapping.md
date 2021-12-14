@@ -3,24 +3,30 @@
 
 ## Threat Scenarios
 
-The threat is here that a microservice is being offered to run under `root` in the container. If the service contains a weakness the attacker has full privileges within the container. While there's still some default protection left (Linux capabilities, either AppArmor or SELinux profiles) it removes one layer of protection. This extra layer broadens the attack surface. It also violates the least privilege principle [1] and from the OWASP perspective an insecure default.
+The threat is here that a microservice is being offered to run under `root` in the container. If the service contains a weakness the attacker has full privileges within the container. While there's still some default protection left (Linux capabilities, either AppArmor or SELinux profiles) it removes one layer of protection. This extra layer broadens the attack surface. It also violates the least privilege principle [1] and from the OWASP perspective is an insecure default.
 
-It should be noted that it is very dangerous for the host and all containers on this host to run a privileged container (`--privileged`) as it removes almost every restriction. Root in a container can access e.g. block devices, the /proc and /sys file system on the host and with a little work it can also load modules on the host [2].
+For privileged containers (`--privileged`) a breakout from the microservice into the container is almost comparable to run without any container. Privileged containers endanger your whole host and all other containers.
 
 
 ## How Do I prevent?
 
-It is important to run your microservice with the least privilege possible. The good thing is that containers are unprivileged, unless you have configured them explicitly differently (e.g. `docker run --privileged`). However running your microservice under a different user as root requires configuration. You need to configure your mini distribution of your container to both contain a user (and maybe a group) and your service needs to make use of this user and group.
+It is important to run your microservice with the least privilege possible.
+
+First of all: Never use the `--privileged` flag. It gives all so-called capabilities (see D04) to the container and it can access host devices (`/dev`) including disks, and also has access to the `/sys` and `/proc` filesystem. And with a little work the container can even load kernel modules on the host [2]. The good thing is that containers are per default unprivileged. You would have to configure them explicitly to run privileged.
+
+However still running your microservice under a different user as root requires configuration. You need to configure your mini distribution of your container to both contain a user (and maybe a group) and your service needs to make use of this user and group.
 
 Basically there are two choices.
 
-In a simple container scenario if you build your container you have to add `RUN useradd <username>` or `RUN adduser <username>` with the appropriate parameters -- respectively the same applies for group IDs. Then, before you start the microservice, the `USER <username>` [3] switches to this user. Please note that a standard web server wants to use a port like 80 or 443. Configuring a user doesn't let you bind the server on any port below 1024. There's no need at all to bind to a low port for any service. You need to configure a higher port and map this port accordingly with the expose command [4]. Your mileage may vary if you're using an orchestration tool.
+In a simple container scenario if you build your container you have to add `RUN useradd <username>` or `RUN adduser <username>` with the appropriate parameters -- respectively the same applies for group IDs. Then, before you start the microservice, the `USER <username>` [3] switches to this user. Please note that a standard web server wants to use a port like 80 or 443. Configuring a user doesn't let you bind the server on any port below 1024. There's no need at all to bind to a low port for any service. You should then configure a higher port and map this port accordingly with the expose command [4]. If a binary needs root for other reasons you can grant them the capabitlity only using `setcap` instead of full root privileges [5].
 
-The second choice would be using Linux *user namespaces*. Namespaces are a general means to provide to a container a different (faked) view of Linux kernel resources. There are different resources available like User, Network, PID, IPC, see `namespaces(7)`. In the case of *user namespaces* a container could be provided with a his view of a standard root user whereas the host kernel maps this to a different user ID. More, see [5], `cgroup_namespaces(7)` and `user_namespaces(7)`.
+The second choice would be using Linux *user namespaces*. Namespaces are a general means to provide to a container a different (faked) view of Linux kernel resources. There are different resources available like User, Network, PID, IPC, see `namespaces(7)`. In the case of *user namespaces* a container could be provided with a relative perspective of a standard root user whereas the host kernel maps this to a different user ID. More, see [6], `cgroup_namespaces(7)` and `user_namespaces(7)`.
 
-The catch using namespaces is that you can only run one namespace at a time. If you run user namespacing you e.g. can't use network namespacing on the same host [6]. Also, all your containers on a host will be defaulted to it, unless you explicitly configure this differently per container.
+User namespace does come with some limitations [7]. If you run user namespacing you e.g. can't share network/pid namespace with the host `--pid=host` or `--network=host`. Also, all your containers on a host will be defaulted to it, unless you explicitly configure this differently per container.
 
+In any case use user IDs which haven't been taken yet. If you e.g. run a service in a container which maps outside the container to a `systemd` user, this is not necessarily better.
 
+Your mileage may vary if you're using an orchestration tool. In an orchestrated environment make sure that you have a proper pod security policy.
 
 ## How can I find out?
 
@@ -40,9 +46,7 @@ Have a look in the process list of the host, or use `docker top` or `docker insp
 
 #### User namespaces
 
-The files `/etc/subuid` and `/etc/subgid` do the uid mapping for all containers. If they don't exist and `/var/lib/docker/` doesn't contain
-any other entries owned by `root:root` you're not using any uid remapping. On the other hand if those files exist and there are files in that directory you still need to check whether your docker daemon was started with `--userns-remap` or the config file `/etc/docker/daemon.json` was used.
-
+The files `/etc/subuid` and `/etc/subgid` do the UID mapping for all containers. If they don't exist and `/var/lib/docker/` doesn't contain any other entries owned by `root:root` you're not using any UID remapping. On the other hand if those files exist and there are files in that directory you still need to check whether your docker daemon was started with `--userns-remap` or the config file `/etc/docker/daemon.json` was used.
 
 
 
@@ -50,8 +54,9 @@ any other entries owned by `root:root` you're not using any uid remapping. On th
 * [1] [OWASP: Security by Design Principles](https://www.owasp.org/index.php/Security_by_Design_Principles#Principle_of_Least_privilege)
 * [3] [Docker Docs: USER command](https://docs.docker.com/engine/reference/builder/#user)
 * [4] [Docker Docs: EXPOSE command](https://docs.docker.com/engine/reference/builder/#expose)
-* [5] [Docker Docs: Isolate containers with a user namespace](https://docs.docker.com/engine/security/userns-remap/)
-* [6] [Docker Docs: User namespace known limitations](https://docs.docker.com/engine/security/userns-remap/#user-namespace-known-restrictions)
+* [5] Rasene's blog: https://raesene.github.io/blog/2017/07/23/network-tools-in-nonroot-docker-images/
+* [6] [Docker Docs: Isolate containers with a user namespace](https://docs.docker.com/engine/security/userns-remap/)
+* [7] [Docker Docs: User namespace known limitations](https://docs.docker.com/engine/security/userns-remap/#user-namespace-known-restrictions)
 
 ### Commercial
 

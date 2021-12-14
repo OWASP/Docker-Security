@@ -1,0 +1,9 @@
+version: "3.6"
+services:
+  build:
+    build: .
+    image: dockersecbuilder:latest
+    entrypoint: /build/entrypoint.sh
+    volumes:
+      - .:/build
+

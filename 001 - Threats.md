@@ -5,6 +5,9 @@ The classical approach how to secure an environment is looking at it from the at
 
 Those vectors will help you to define what needs to be protected. With this definition one can put security controls in place to provide a baseline protection and beyond. This is what the ten controls in the following chapters are about.
 
+The following image gives an overview of threats in docker.
+![threat-overview](assets/threats.png)
+
 
 ### Threat 1: Container Escape (System)
 
@@ -35,17 +38,17 @@ This again has the same first vector as the one mentioned before. With his shell
 ### Threat 6: Resource Starvation
 
 The underlying vector is due to a security condition from another container
-running on the same host. The security condition could be either to the
+running on the same host. The security condition could be due to the
 fact that the other container is eating up resources which could be CPU cycles,
 RAM, network or disk-I/O.
 
 It could also be that the container has a host file system mounted which the
-attacker has been filling up which causes problem on the host which in turn
+attacker has been filling up which causes problems on the host which in turn
 affects other containers.
 
 ### Threat 7: Host compromise
 
-Whereas the previous threat the attacker managed indirectly over the host to affect
+Whereas in the previous threat the attacker managed indirectly over the host to affect
 another / other containers, here the attacker has compromised the host -- either through
 another container or through the network.
 
@@ -56,7 +59,7 @@ The CD pipeline could involve several hops where the mini operating system image
 been passed from one step to the next until it reaches the deployment.
 
 Every hop is a potential attack surface for the attacker. If an attacker manages
-to get foot into one step and there's no integrity check whether what will be
+to get a foothold into one step and there's no integrity check whether what will be
 deployed is what should be deployed there is the threat that on behalf of the
 attacker images with his malicious payloads are being deployed.
 

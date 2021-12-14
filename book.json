@@ -1,0 +1,15 @@
+{
+  "structure": {
+    "readme": "000 - Introduction.md"
+  },
+  "title": "OWASP Docker Top 10",
+  "description": "The Ten Most Important Aspects To Build a Secure Containerized Environment",
+  "language": "en_US",
+  "gitbook": "3.2.3",
+  "pdf": {
+    "fontFamily": "sans-serif",
+    "chapterMark": "pagebreak",
+    "pageBreaksBefore": "//*[name()='pagebreak']"
+  }
+}
+
