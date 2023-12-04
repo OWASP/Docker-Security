@@ -36,7 +36,7 @@ Each of those ten points has paragraphs in the following order:
   * introduction,
   * outline of threat scenarios,
   * recommendation how to prevent the aforementioned threats,
-  * technical hint how to identify whether you might a problem here
+  * technical hint how to identify whether you might have a problem here
   * and eventually lists references (split in commercial and non-commercial ones) 
 
 It is mostly agnostic to any orchestration framework or any other specific product (OS, programming language).
