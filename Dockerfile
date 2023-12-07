@@ -7,12 +7,11 @@ RUN apt-get update && \
     chown node:node /build && chmod 0750 /build
 
 # Install custom gitbook version
-RUN npm i gitbook-cli -g 
-
-USER node
-
-RUN git clone -b fix/filename-regex https://github.com/PauloASilva/gitbook.git ~/gitbook-custom && \
-    cd ~/gitbook-custom && npm  i && \
-    gitbook alias ~/gitbook-custom latest
-
+ 
 WORKDIR /build
+USER root
+ENV PUPPETEER_SKIP_DOWNLOAD=true
+RUN apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-extra-utils texlive-latex-extra
+COPY entrypoint.sh .
+# RUN git clone "https://github.com/simonhaenisch/md-to-pdf" && cd md-to-pdf && npm link 
+

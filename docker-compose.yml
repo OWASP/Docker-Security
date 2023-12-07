@@ -3,7 +3,7 @@ services:
   build:
     build: .
     image: dockersecbuilder:latest
-    entrypoint: gitbook pdf ./ ./dist/owasp-docker-security.pdf --gitbook=latest
+    entrypoint: /build/entrypoint.sh
     volumes:
       - .:/build
 
